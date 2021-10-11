@@ -1,17 +1,25 @@
 # Push-able Vertex
 
+## First of all
+Go to the following website to experience it!
+https://aukskit.github.io/
+
 ## Overview
 This application is a GUI application implemented in JavaScript.
 
 Common library is based on the following book.
 - Title
-    - Electronではじめるデスクトップアプリケーション開発
+    - Real-Time 3D Graphics with WebGL 2 - Second Edition
+- Written by
+    - Farhad Ghayour, Diego Cantor
 - Publisher
-    - Rutles
+    - Packt Publishing
+- [website](https://www.packtpub.com/product/real-time-3d-graphics-with-webgl-2-second-edition/9781788629690)
 
 ## Environment
-- Need to install electron by using following command.
+To Run this application on Electron, run the following command.
 ```Terminal
+> cd <project_folder>
 > npm install electron
 ```
 
