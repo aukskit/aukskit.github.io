@@ -30,6 +30,10 @@ class Controls {
     canvas.onmousewheel = event => this.onMouseWheel(event);
     window.onkeydown = event => this.onKeyDown(event);
     window.onkeyup = event => this.onKeyUp(event);
+
+    canvas.ontouchstart = event => this.onTouchStart(event);
+    canvas.ontouchmove = event => this.onTouchMove(event);
+    canvas.ontouchend = event => this.onTouchEnd(event);
   }
 
   // Sets picker for picking objects
@@ -85,6 +89,61 @@ class Controls {
   }
 
   onMouseMove(event) {
+    this.lastX = this.x;
+    this.lastY = this.y;
+
+    this.x = event.clientX;
+    this.y = event.clientY;
+
+    if (!this.dragging) return;
+
+    this.ctrl = event.ctrlKey;
+    this.alt = event.altKey;
+
+    const dx = this.x - this.lastX;
+    const dy = this.y - this.lastY;
+
+    if (this.picking && this.picker.moveCallback) {
+      this.picker.moveCallback(dx, dy);
+      return;
+    }
+
+    if (!this.button) {
+      this.alt
+        ? this.dolly(dy)
+        : this.rotate(dx, dy);
+    }
+  }
+
+  onTouchEnd(event) {
+    this.dragging = false;
+
+    if (!event.shiftKey && this.picker) {
+      this.picking = false;
+      this.picker.stop();
+    }
+  }
+
+  onTouchStart(event) {
+    // Disable Display Scroll
+    event.preventDefault();
+    this.dragging = true;
+
+    this.x = event.clientX;
+    this.y = event.clientY;
+    this.button = event.button;
+
+    this.dstep = Math.max(this.camera.position[0], this.camera.position[1], this.camera.position[2]) / 100;
+
+    if (!this.picker) return;
+
+    const coordinates = this.get2DCoords(event);
+    this.picking = this.picker.find(coordinates);
+
+    if (!this.picking) this.picker.stop();
+  }
+
+  onTouchMove(event) {
     this.lastX = this.x;
     this.lastY = this.y;
 
