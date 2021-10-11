@@ -144,6 +144,8 @@ class Controls {
   }
 
   onTouchMove(event) {
+    // Disable Display Scroll
+    event.preventDefault();
     this.lastX = this.x;
     this.lastY = this.y;
 
