@@ -69,6 +69,14 @@ const utils = {
     return color.map(c => c / 255);
   },
 
+  // Grayscale color
+  grayScale(color) {
+    const gray = color.reduce(function (pur, cur) {
+      return pur + cur;
+    }) / color.length;
+    return color.map(c => gray/255);
+  },
+
   // De-normalize colors from 0-1 to 0-255
   denormalizeColor(color) {
     return color.map(c => c * 255);

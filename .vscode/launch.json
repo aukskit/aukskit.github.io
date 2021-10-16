@@ -1,0 +1,30 @@
+{
+    "version": "0.0.1",
+    "configurations": [
+      {
+        // https://www.youtube.com/watch?v=nuZIeJ0ljgo
+        "name": "Debug",
+        "type": "chrome",
+        "request": "launch",
+        "cwd": "${workspaceFolder}",
+        "runtimeExecutable": "${workspaceFolder}/node_modules/.bin/electron",
+        "runtimeArgs": [
+          "${workspaceRoot}",
+          "--enable-logging",
+          "--remote-debugging-port=9222"
+        ],
+        "windows": {
+          "runtimeExecutable": "${workspaceFolder}/node_modules/.bin/electron.cmd"
+        },
+        "outputCapture": "std"
+      },
+      {
+        "name": "Attach to Process",
+        "type": "chrome",
+        "request": "attach",
+        "port": 9222
+      },
+    ]
+  }
+  
+  

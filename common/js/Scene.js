@@ -155,6 +155,11 @@ class Scene {
     this.objects.splice(index, 1);
   }
 
+  // Remove all items from the scene
+  removeAll() {
+    this.objects = [];
+  }
+
   // Renders an item first
   renderFirst(alias) {
     const object = this.get(alias);

@@ -26,6 +26,7 @@
   <!-- my modules-->
   <script type="text/javascript" src="common/js/myutils.js"></script>
   <script type="text/javascript" src="common/js/Animator.js"></script>
+  <script type="text/javascript" src="common/js/Divider.js"></script>
 
   <script id="vertex-shader" type="x-shader/x-vertex">
     #version 300 es
@@ -239,17 +240,26 @@
       scene.add(new Floor(80, 20));
       
       // Add Sphere
-      scene.add(new Sphere(radious, division, division, scale));
+      // scene.add(new Sphere(radious, division, division, scale));
+      let spheres = new Divider(new Sphere(radious, division, division, scale));
+      spheres.objects.forEach(s => {
+        s.diffuse = [...utils.normalizeColor(color), 1.0];
+        scene.add(s);
+      });
 
       // Set diffuse color to sphere(to be able to picka the object)
-      scene.get('sphere').diffuse = [...utils.normalizeColor(color), 1.0]
+      // scene.get('sphere').diffuse = [...utils.normalizeColor(color), 1.0]
 
     }
 
     function reload() {
-      scene.remove('sphere');
-      scene.add(new Sphere(radious, division, division, scale));
-      scene.get('sphere').diffuse = [...utils.normalizeColor(color), 1.0]
+      scene.removeAll();
+      scene.add(new Floor(80, 20));
+      let spheres = new Divider(new Sphere(radious, division, division, scale));
+      spheres.objects.forEach(s => {
+        s.diffuse = [...utils.normalizeColor(color), 1.0];
+        scene.add(s);
+      });
     }
 
     function hitProperty(obj) {
@@ -258,7 +268,8 @@
 
     function addHit(obj) {
       obj.previous = obj.diffuse.slice(0);
-      obj.diffuse = obj.pickingColor;
+      // obj.diffuse = obj.pickingColor;
+      obj.diffuse = [...utils.grayScale(color), 1];
     }
 
     function removeHit(obj) {
@@ -408,7 +419,8 @@
           value: color,
           onChange: v => {
             color = v,
-            scene.get('sphere').diffuse = [...utils.normalizeColor(v), 1.0]
+            // scene.get('sphere').diffuse = [...utils.normalizeColor(v), 1.0]
+            reload()
           }
         },
         'Radious':  {
@@ -421,7 +433,7 @@
         },
         'Division':  {
           value: division,
-          min:3, max: 105, step: 1,
+          min:3, max: 20, step: 1,
           onChange: v => {
             division = v,
             reload()
@@ -447,7 +459,7 @@
           updater.start();
         },
         'Division Up': () => {
-          updater.add(new Animator("division", 3, division, 3000, 'linear', animate));
+          updater.add(new Animator("division", 3, 20, 3000, 'linear', animate));
           // updater.add(new Animator("division", division, 3, 3000, 'linear', animate));
           updater.start();
         },

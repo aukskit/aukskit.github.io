@@ -86,6 +86,7 @@ class Sphere {
     }
     return [v, i]
   }
+
   /**
   * Stretch/Shrink the size of vertex based on center inward 
   * @param vertices {vec3} list of vertices
