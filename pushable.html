@@ -277,13 +277,15 @@
     }
 
     function processHits(hits) {
-      hits.forEach(hit => hit.diffuse = hit.previous);
+      // hits.forEach(hit => hit.diffuse = hit.previous);
+      hits.forEach(hit => hit.diffuse = [1, 0, 0, 1]);
     }
 
     function movePickedObjects(dx, dy) {
       const hits = picker.getHits();
 
       if (!hits) return;
+      return;
 
       // Can change factor to be dynamic on screen size
       // or hard-coded for a particular interaction

@@ -10,7 +10,7 @@ class Divider {
     for( let i=0; i < n; i++) {
       let o = {...object};
       o.alias = object.alias + '_' + String(i);
-      o.pickingColor = this.diffuseColorGenerator(i);
+      o.pickingColor = this.generateDiffuseColor(i);
       
       o.indices = object.indices.slice(0, 9);
       let v = object.vertices.slice(9*i, 9*i+9);
@@ -25,7 +25,7 @@ class Divider {
   * @param {number} index
   * @return {list} unique defuse color
   */
-  diffuseColorGenerator(index) {
+  generateDiffuseColor(index) {
     let colorR = ((index)       % 100) + 50;
     let colorG = (parseInt(index/100  ) % 100) + 50;
     let colorB = (parseInt(index/10000) % 100) + 50;
