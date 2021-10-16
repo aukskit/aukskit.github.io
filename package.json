@@ -1,0 +1,22 @@
+{
+  "name": "aukskit.github.io",
+  "version": "1.0.0",
+  "description": "## First of all Go to the following website to experience it!",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aukskit/aukskit.github.io.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/aukskit/aukskit.github.io/issues"
+  },
+  "homepage": "https://github.com/aukskit/aukskit.github.io#readme",
+  "dependencies": {
+    "electron": "^15.2.0"
+  }
+}
