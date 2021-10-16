@@ -5,6 +5,8 @@ Go to the following website to experience it!
 
 https://aukskit.github.io/
 
+![](images/paintVertex.png)
+
 ## Overview
 This application is a GUI application implemented in JavaScript.
 

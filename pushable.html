@@ -125,7 +125,7 @@
 
     let gl, clock, program, camera, transforms, controls, scene,
       picker, showPickingImage = false,
-      radious = 21, division = 10, scale = 0.9, color = [255, 174, 59],
+      radious = 21, division = 10, scale = 0.9, color = [255, 174, 59], paintcolor = [255, 0, 0],
       updater;
 
     function configure() {
@@ -278,7 +278,7 @@
 
     function processHits(hits) {
       // hits.forEach(hit => hit.diffuse = hit.previous);
-      hits.forEach(hit => hit.diffuse = [1, 0, 0, 1]);
+      hits.forEach(hit => hit.diffuse = [...utils.normalizeColor(paintcolor), 1.0]);
     }
 
     function movePickedObjects(dx, dy) {
@@ -423,6 +423,13 @@
             color = v,
             // scene.get('sphere').diffuse = [...utils.normalizeColor(v), 1.0]
             reload()
+          }
+        },
+        'Paint Color': {
+          value: paintcolor,
+          onChange: v => {
+            paintcolor = v
+            // reload()
           }
         },
         'Radious':  {
