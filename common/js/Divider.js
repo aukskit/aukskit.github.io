@@ -2,11 +2,10 @@
 
 // Divide vertices to vertex set
 class Divider {
-
-  constructor(object) {
+  constructor(object, num) {
     this.objects = []
 
-    let n = this.getNumberOFVetex(object.vertices);
+    let n = num || this.getNumberOFVetex(object.vertices);
     for( let i=0; i < n; i++) {
       let o = {...object};
       o.alias = object.alias + '_' + String(i);
@@ -83,5 +82,9 @@ class Divider {
       vertices[i] -= vec[i%3];
     }
     return vertices;
+  }
+
+  conbine(vertices) {
+    
   }
 }

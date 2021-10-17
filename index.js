@@ -9,7 +9,9 @@ function createWindow () {
             nodeIntegration: true
         }
     });
-    win.loadFile('pushable.html');
+    //win.loadFile('pushable.html');
+    // win.loadFile('logo_maker.html');
+    win.loadFile('text.html');
     // win.webContents.openDevTools();
 }
 app.whenReady().then(createWindow);

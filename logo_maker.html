@@ -125,7 +125,7 @@
 
     let gl, clock, program, camera, transforms, controls, scene,
       picker, showPickingImage = false,
-      radious = 21, division = 10, scale = 0.9, color = [255, 174, 59], paintcolor = [255, 0, 0],
+      radious = 50, division = 10, scale = 0.9, color = [255, 174, 59], paintcolor = [255, 0, 0],
       saturation = 50, lightness = 50,
       updater;
 
@@ -177,10 +177,10 @@
       });
 
       camera = new Camera(Camera.ORBITING_TYPE);
-      camera.goHome([0, 0, 192]);
+      camera.goHome([0, 0, 100]);
       camera.setFocus([0, 0, 0]);
-      camera.setElevation(-22);
-      camera.setAzimuth(37);
+      // camera.setElevation(-22);
+      // camera.setAzimuth(37);
       controls = new Controls(camera, canvas);
       // Set picker
       controls.setPicker(picker);
@@ -252,21 +252,16 @@
 
     function load() {
       // Create Floar
-      scene.add(new Floor(80, 20));
+      // scene.add(new Floor(80, 20));
       
       // Add Sphere
-      // scene.add(new Sphere(radious, division, division, scale));
-      let spheres = new Divider(new Sphere(radious, division, division, scale));
+      let spheres = new Divider(new Sphere(radious, division, division, scale), division);
       spheres.objects.forEach(s => {
         // s.diffuse = [...utils.normalizeColor(color), 1.0];
         // s.diffuse = [...utils.normalizeColor(colorGenerator()), 1.0];
         s.diffuse = [...utils.normalizeColor(colorGenerator2()), 1.0];
         scene.add(s);
       });
-
-      // Set diffuse color to sphere(to be able to picka the object)
-      // scene.get('sphere').diffuse = [...utils.normalizeColor(color), 1.0]
-
     }
 
     function reload() {
@@ -426,30 +421,28 @@
 
     }
 
+    function save() {
+      let canvas = document.getElementById("webgl-canvas");
+      let a = document.createElement('a');
+      a.href = canvas.toDataURL("image/jpeg");
+      a.download = 'download.jpg';
+      a.click();
+    }
+
     window.onload = init;
 
     function initControls() {
       utils.configureControls({
-        'Show Picking Image': {
-          value: showPickingImage,
-          onChange: v => showPickingImage = v
-        },
-        'Sphere Color': {
-          value: color,
-          onChange: v => {
-            color = v,
-            // scene.get('sphere').diffuse = [...utils.normalizeColor(v), 1.0]
-            reload()
-          }
+        'Reset': () => {
+          reload();
         },
         'Paint Color': {
           value: paintcolor,
           onChange: v => {
             paintcolor = v
-            // reload()
           }
         },
-        'Radious':  {
+        'Scale':  {
           value: radious,
           min: 0, max: 100, step: 1,
           onChange: v => {
@@ -457,47 +450,21 @@
             reload()
           }
         },
-        'Division':  {
+        'Number':  {
           value: division,
-          min:3, max: 20, step: 1,
+          min:3, max: 30, step: 1,
           onChange: v => {
             division = v,
             reload()
           }
         },
-        'Scale':  {
+        'Crack':  {
           value: scale,
           min: 0, max: 1, step: 0.001,
           onChange: v => {
             scale = v,
             reload()
           }
-        },
-        'Reset Scene': () => {
-          scene.objects = [];
-          load();
-          camera.goHome();
-          camera.setElevation(-40);
-          camera.setAzimuth(-30);
-        },
-        'Scale animation': () => {
-          updater.add(new Animator("scale", 0, scale, 1000, 'easeInSine', animate));
-          updater.start();
-        },
-        'Division Up': () => {
-          updater.add(new Animator("division", 3, 20, 3000, 'linear', animate));
-          // updater.add(new Animator("division", division, 3, 3000, 'linear', animate));
-          updater.start();
-        },
-        'Division Down': () => {
-          // updater.add(new Animator("division", 3, division, 3000, 'linear', animate));
-          updater.add(new Animator("division", division, 3, 3000, 'linear', animate));
-          updater.start();
-        },
-        'Animations': () => {
-          updater.add(new Animator("division", 3, division, 3000, 'linear', animate));
-          updater.add(new Animator("scale", 0, scale, 3000, 'easeInSine', animate));
-          updater.start();
         },
         'Saturation':  {
           value: saturation,
@@ -514,7 +481,10 @@
             lightness = v,
             reload()
           }
-        }
+        },
+        'Save': () => {
+          save();
+        },
       });
     }
 
