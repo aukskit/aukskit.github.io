@@ -121,63 +121,63 @@ class Controls {
 
   onTouchEnd(event) {
     console.log("touch end");
-    // this.dragging = false;
+    this.dragging = false;
 
-    // if (!event.shiftKey && this.picker) {
-    //   this.picking = false;
-    //   this.picker.stop();
-    // }
+    if (!event.shiftKey && this.picker) {
+      this.picking = false;
+      this.picker.stop();
+    }
   }
 
   onTouchStart(event) {
     console.log("touch start");
     // Disable Display Scroll
-    // event.preventDefault();
-    // this.dragging = true;
+    event.preventDefault();
+    this.dragging = true;
 
-    // this.x = event.clientX;
-    // this.y = event.clientY;
-    // this.button = event.button;
+    this.x = event.clientX;
+    this.y = event.clientY;
+    this.button = event.button;
 
-    // this.dstep = Math.max(this.camera.position[0], this.camera.position[1], this.camera.position[2]) / 100;
+    this.dstep = Math.max(this.camera.position[0], this.camera.position[1], this.camera.position[2]) / 100;
 
-    // if (!this.picker) return;
+    if (!this.picker) return;
 
-    // const coordinates = this.get2DCoords(event);
-    // this.picking = this.picker.find(coordinates);
+    const coordinates = this.get2DCoords(event);
+    this.picking = this.picker.find(coordinates);
 
-    // if (!this.picking) this.picker.stop();
+    if (!this.picking) this.picker.stop();
 
   }
 
   onTouchMove(event) {
     console.log("touch move");
-    // // Disable Display Scroll
-    // event.preventDefault();
-    // this.lastX = this.x;
-    // this.lastY = this.y;
+    // Disable Display Scroll
+    event.preventDefault();
+    this.lastX = this.x;
+    this.lastY = this.y;
 
-    // this.x = event.clientX;
-    // this.y = event.clientY;
+    this.x = event.clientX;
+    this.y = event.clientY;
 
-    // if (!this.dragging) return;
+    if (!this.dragging) return;
 
-    // this.ctrl = event.ctrlKey;
-    // this.alt = event.altKey;
+    this.ctrl = event.ctrlKey;
+    this.alt = event.altKey;
 
-    // const dx = this.x - this.lastX;
-    // const dy = this.y - this.lastY;
+    const dx = this.x - this.lastX;
+    const dy = this.y - this.lastY;
 
-    // if (this.picking && this.picker.moveCallback) {
-    //   this.picker.moveCallback(dx, dy);
-    //   return;
-    // }
+    if (this.picking && this.picker.moveCallback) {
+      this.picker.moveCallback(dx, dy);
+      return;
+    }
 
-    // if (!this.button) {
-    //   this.alt
-    //     ? this.dolly(dy)
-    //     : this.rotate(dx, dy);
-    // }
+    if (!this.button) {
+      this.alt
+        ? this.dolly(dy)
+        : this.rotate(dx, dy);
+    }
   }
 
   onKeyDown(event) {
