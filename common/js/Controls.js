@@ -34,7 +34,7 @@ class Controls {
     // canvas.ontouchstart = event => this.onTouchStart(event);
     // canvas.ontouchmove = event => this.onTouchMove(event);
     // canvas.ontouchend = event => this.onTouchEnd(event);
-    canvas.addEventListener("touchstart", onTouchStart, false);
+    canvas.addEventListener("touchstart", this.onTouchStart, false);
   }
 
   // Sets picker for picking objects
