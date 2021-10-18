@@ -31,12 +31,9 @@ class Controls {
     window.onkeydown = event => this.onKeyDown(event);
     window.onkeyup = event => this.onKeyUp(event);
 
-    // canvas.ontouchstart = event => this.onTouchStart(event);
-    // canvas.ontouchmove = event => this.onTouchMove(event);
-    // canvas.ontouchend = event => this.onTouchEnd(event);
-    canvas.addEventListener("touchstart", this.onTouchStart, false);
-    canvas.addEventListener("touchmove", this.onTouchMove, false);
-    canvas.addEventListener("touchend", this.onTouchEnd, false);
+    canvas.ontouchstart = event => this.onTouchStart(event);
+    canvas.ontouchmove = event => this.onTouchMove(event);
+    canvas.ontouchend = event => this.onTouchEnd(event);
   }
 
   // Sets picker for picking objects
@@ -135,15 +132,16 @@ class Controls {
     event.preventDefault();
     this.dragging = true;
 
-    this.x = event.clientX;
-    this.y = event.clientY;
+    var touchObject = event.changedTouches[0] ;
+    this.x = touchObject.pageX;
+    this.y = touchObject.pageY;
     this.button = event.button;
 
     this.dstep = Math.max(this.camera.position[0], this.camera.position[1], this.camera.position[2]) / 100;
 
     if (!this.picker) return;
 
-    const coordinates = this.get2DCoords(event);
+    const coordinates = this.get2DCoordsForTouch(event);
     this.picking = this.picker.find(coordinates);
 
     if (!this.picking) this.picker.stop();
@@ -151,22 +149,26 @@ class Controls {
   }
 
   onTouchMove(event) {
-    console.log("touch move");
     // Disable Display Scroll
     event.preventDefault();
     this.lastX = this.x;
     this.lastY = this.y;
 
-    this.x = event.clientX;
-    this.y = event.clientY;
+    var touchObject = event.changedTouches[0] ;
+
+    this.x = touchObject.pageX;
+    this.y = touchObject.pageY;
+
 
     if (!this.dragging) return;
 
     this.ctrl = event.ctrlKey;
     this.alt = event.altKey;
 
-    const dx = this.x - this.lastX;
-    const dy = this.y - this.lastY;
+    const dx = parseInt(this.x - this.lastX);
+    const dy = parseInt(this.y - this.lastY);
+
+    console.log(dx, dy);
 
     if (this.picking && this.picker.moveCallback) {
       this.picker.moveCallback(dx, dy);
@@ -174,10 +176,31 @@ class Controls {
     }
 
     if (!this.button) {
-      this.alt
-        ? this.dolly(dy)
-        : this.rotate(dx, dy);
+      this.rotate(dx, dy);
     }
+  }
+
+  // 
+  get2DCoordsForTouch(event) {
+    var touchObject = event.changedTouches[0] ;
+
+    let top = 0,
+      left = 0,
+      canvas = this.canvas;
+
+    while (canvas && canvas.tagName !== 'BODY') {
+      top += canvas.offsetTop;
+      left += canvas.offsetLeft;
+      canvas = canvas.offsetParent;
+    }
+
+    left += window.pageXOffset;
+    top -= window.pageYOffset;
+
+    return {
+      x: touchObject.pageX  - left,
+      y: this.canvas.height - (touchObject.pageY - top)
+    };
   }
 
   onKeyDown(event) {
