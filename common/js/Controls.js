@@ -35,6 +35,8 @@ class Controls {
     // canvas.ontouchmove = event => this.onTouchMove(event);
     // canvas.ontouchend = event => this.onTouchEnd(event);
     canvas.addEventListener("touchstart", this.onTouchStart, false);
+    canvas.addEventListener("touchmove", this.onTouchMove, false);
+    canvas.addEventListener("touchend", this.onTouchEnd, false);
   }
 
   // Sets picker for picking objects
@@ -118,6 +120,7 @@ class Controls {
   }
 
   onTouchEnd(event) {
+    console.log("touch end");
     // this.dragging = false;
 
     // if (!event.shiftKey && this.picker) {
@@ -128,7 +131,7 @@ class Controls {
 
   onTouchStart(event) {
     console.log("touch start");
-    // // Disable Display Scroll
+    // Disable Display Scroll
     // event.preventDefault();
     // this.dragging = true;
 
@@ -148,6 +151,7 @@ class Controls {
   }
 
   onTouchMove(event) {
+    console.log("touch move");
     // // Disable Display Scroll
     // event.preventDefault();
     // this.lastX = this.x;
