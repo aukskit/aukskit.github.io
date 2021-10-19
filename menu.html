@@ -284,7 +284,6 @@
     function processHits(hits) {
       // hits.forEach(hit => hit.diffuse = hit.previous);
       hits.forEach(hit => {
-        hit.diffuse = [...utils.normalizeColor(paintcolor), 1.0];
         switch(hit.alias) {
         case 'sphere_0':
           window.location = "./sphere.html" // You can add link!
