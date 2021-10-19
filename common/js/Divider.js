@@ -6,12 +6,14 @@ class Divider {
     this.objects = []
 
     let n = num || this.getNumberOFVetex(object.vertices);
+    // let o;
+    // let v;
+
     for( let i=0; i < n; i++) {
       let o = {...object};
       o.alias = object.alias + '_' + String(i);
       o.pickingColor = this.generateDiffuseColor(i);
-      
-      o.indices = object.indices.slice(0, 9);
+      o.indices = object.indices.slice(0, 3);
       let v = object.vertices.slice(9*i, 9*i+9);
       o.position = this.calcInward(v);
       o.vertices = this.translateVertices(v, o.position);
