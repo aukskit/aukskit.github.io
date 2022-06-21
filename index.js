@@ -11,7 +11,8 @@ function createWindow () {
     });
     //win.loadFile('pushable.html');
     // win.loadFile('logo_maker.html');
-    win.loadFile('text.html');
+    // win.loadFile('text.html');
+    win.loadFile('menu.html');
     // win.webContents.openDevTools();
 }
 app.whenReady().then(createWindow);
