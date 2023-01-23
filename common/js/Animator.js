@@ -64,6 +64,7 @@ class Updater {
 	
 	constructor() {
 		this.targets = [];
+		this.requestId = null;
 	}
 
 	add(target) {
@@ -75,19 +76,25 @@ class Updater {
 	}
 
 	remove(target) {
-		this.targets = this.targets.filter(element => element != target)
+		this.targets = this.targets.filter(element => element.id != target);
+		if( this.targets.length == 0) {
+			window.cancelAnimationFrame(this.requestId);
+			this.requestId = null;
+		}
 	}
 
 	start() {
 		this.targets.forEach(element => element.start());
-		window.requestAnimationFrame(this.update.bind(this));
+		if (this.requestId == null) {
+			this.requestId = window.requestAnimationFrame(this.update.bind(this));
+		}
 	}
 
 	update() {
-		window.requestAnimationFrame(this.update.bind(this));
+		this.requestId = window.requestAnimationFrame(this.update.bind(this));
 		this.targets.forEach(element => {
 			if(element.isDone()){
-				this.remove(element);
+				this.remove(element.id);
 			} else {
 				element.update();
 			}
@@ -100,6 +107,15 @@ class Updater {
 			return target.getProgress();
 		} else {
 			return undefined;
+		}
+	}
+
+	isActive(id) {
+		let target = this.targets.find(element => element.id == id);
+		if( target != undefined) {
+			return true;
+		} else {
+			return false;
 		}
 	}
 }

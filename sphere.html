@@ -307,6 +307,10 @@
       reload();
     }
 
+    function rotate() {
+      camera.changeAzimuth(0.3);
+    }
+
     function render() {
       // Off-screen rendering
       gl.bindFramebuffer(gl.FRAMEBUFFER, picker.framebuffer);
@@ -460,6 +464,14 @@
           updater.add(new Animator("division", 3, division, 3000, 'linear', animate));
           updater.add(new Animator("scale", 0, scale, 3000, 'easeInSine', animate));
           updater.start();
+        },
+        'Rotate': () => {
+          if(updater.isActive("rotate")) {
+            updater.remove("rotate");
+          } else {
+            updater.add(new Animator("rotate", 0, scale, 1000000, 'easeInSine', rotate));
+            updater.start();
+          }
         }
       });
     }
